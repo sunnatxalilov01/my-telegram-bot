@@ -3,6 +3,12 @@
 import telebot
 from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
 
+
+# render servar uchun yozildi
+import os
+from flask import Flask
+#----------------------------
+
 import json
 import time
 import csv
@@ -19,6 +25,14 @@ REVIEWS_FILE = "reviews.json"
 
 bot = telebot.TeleBot(TOKEN)
 
+# render servar uchun yozildi
+app = Flask(__name__)
+
+@app.route('/')
+def home():
+    return "Bot is running!"
+
+#----------------------------
 
 def load_settings():
     try:
@@ -894,3 +908,10 @@ def admin_actions(call):
 bot.remove_webhook()
 bot.infinity_polling()
 
+
+# render servar uchun yozildi
+if __name__ == "__main__":
+    # Render tomonidan ajratilgan portni olish
+    port = int(os.environ.get("PORT", 5000))  # Agar PORT yo'q bo'lsa, 5000 ni ishlatadi
+    app.run(host="0.0.0.0", port=port)  # Flask'ni Render portiga bog‘lash
+#----------------------------
